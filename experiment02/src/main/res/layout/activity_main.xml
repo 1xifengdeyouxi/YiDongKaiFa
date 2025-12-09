@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <Button
+        android:id="@+id/line_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="线性垂直布局" />
+    <Button
+        android:id="@+id/relative_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="相对布局" />
+    <Button
+        android:id="@+id/grid_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Grid布局" />
+    <Button
+        android:id="@+id/constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Constraint布局" />
+    <Button
+        android:id="@+id/table_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="表格布局" />
+    <Button
+        android:id="@+id/frame_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="帧布局" />
+</LinearLayout>

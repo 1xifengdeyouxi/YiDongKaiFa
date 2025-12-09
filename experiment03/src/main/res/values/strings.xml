@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">experiment03</string>
+    <string name="app_name">MyCalculator</string>
+    <string name="hello">简单计算器</string>
+    <string name="simple_calculator">计算器</string>
+    <string name="cancel">CE</string>
+    <string name="divide">÷</string>
+    <string name="multiply">×</string>
+    <string name="clear">C</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="add">+</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+
+</resources>
