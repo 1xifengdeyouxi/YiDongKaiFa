@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebView JavaScript 交互</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-radius: 4px;
+            border-left: 4px solid #4CAF50;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WebView 与 JavaScript 交互演示</h1>
+        
+        <div>
+            <h3>1. Android 调用 JavaScript 方法</h3>
+            <p>点击 Android 端的"调用JS方法"按钮，会调用下面的 JavaScript 函数：</p>
+            <button class="button" onclick="showMessage()">测试 JS 方法</button>
+            <div id="jsResult" class="result" style="display:none;"></div>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <h3>2. JavaScript 调用 Android 方法</h3>
+            <p>点击下面的按钮，会调用 Android 的 showToast 方法：</p>
+            <button class="button" onclick="callAndroidToast()">调用 Android Toast</button>
+            <button class="button" onclick="callAndroidMethod()">调用 Android 方法（传参）</button>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <h3>3. 数据交互</h3>
+            <p>输入数据，传递给 Android：</p>
+            <input type="text" id="inputData" placeholder="输入要传递的数据" />
+            <button class="button" onclick="sendDataToAndroid()">发送数据到 Android</button>
+            <div id="androidResult" class="result" style="display:none;"></div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript 方法：供 Android 调用
+        function showMessage() {
+            var resultDiv = document.getElementById('jsResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<strong>JavaScript 方法被 Android 调用了！</strong><br>时间: ' + new Date().toLocaleString();
+            return "JavaScript 方法执行成功";
+        }
+        
+        function getDataFromJS() {
+            return {
+                message: "这是来自 JavaScript 的数据",
+                timestamp: new Date().toISOString(),
+                data: [1, 2, 3, 4, 5]
+            };
+        }
+        
+        // JavaScript 调用 Android 方法
+        function callAndroidToast() {
+            if (window.AndroidInterface && window.AndroidInterface.showToast) {
+                window.AndroidInterface.showToast("这是来自 JavaScript 的 Toast 消息！");
+            } else {
+                alert("Android 接口未准备好");
+            }
+        }
+        
+        function callAndroidMethod() {
+            if (window.AndroidInterface && window.AndroidInterface.showMessage) {
+                var message = "JavaScript 调用 Android 方法，时间: " + new Date().toLocaleString();
+                window.AndroidInterface.showMessage(message);
+            } else {
+                alert("Android 接口未准备好");
+            }
+        }
+        
+        function sendDataToAndroid() {
+            var inputData = document.getElementById('inputData').value;
+            if (inputData.trim() === '') {
+                alert("请输入数据");
+                return;
+            }
+            
+            if (window.AndroidInterface && window.AndroidInterface.receiveData) {
+                var result = window.AndroidInterface.receiveData(inputData);
+                var resultDiv = document.getElementById('androidResult');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = '<strong>Android 返回结果：</strong><br>' + result;
+            } else {
+                alert("Android 接口未准备好");
+            }
+        }
+        
+        // 页面加载完成后的回调
+        window.onload = function() {
+            console.log("HTML 页面加载完成");
+            if (window.AndroidInterface && window.AndroidInterface.onPageLoaded) {
+                window.AndroidInterface.onPageLoaded("页面加载完成");
+            }
+        };
+    </script>
+</body>
+</html>
+
