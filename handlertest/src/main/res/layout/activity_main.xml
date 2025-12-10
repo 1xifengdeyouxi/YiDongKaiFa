@@ -1,12 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
     <TextView
-        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Hello world"
-        android:textSize="20sp" />
-</RelativeLayout>
+        android:text="Handler 消息处理机制"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#F5F5F5"
+        android:padding="16dp"
+        android:text="等待消息..."
+        android:textSize="14sp"
+        android:gravity="top|start"
+        android:minHeight="200dp"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/btn_send_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送消息（工作线程）"
+        android:layout_marginBottom="8dp"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_send_delayed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送延迟消息（3秒后）"
+        android:layout_marginBottom="8dp"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_start_timer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开始定时任务（每秒更新）"
+        android:layout_marginBottom="8dp"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_stop_timer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="停止定时任务"
+        android:layout_marginBottom="8dp"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_clear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="清空显示"
+        android:textSize="16sp" />
+
+</LinearLayout>
