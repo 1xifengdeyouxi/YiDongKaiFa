@@ -7,7 +7,6 @@ import android.os.Environment
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import java.io.BufferedReader
 import java.io.BufferedWriter
@@ -19,9 +18,6 @@ import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 
 class FileWriteReadToSD : AppCompatActivity() {
-    companion object {
-        private const val REQUEST_CODE = 100
-    }
 
     private lateinit var textView: TextView
 
@@ -30,37 +26,23 @@ class FileWriteReadToSD : AppCompatActivity() {
         setContentView(R.layout.activity_file_write_read_to_sd)
         textView = findViewById(R.id.textView)
 
-        // 动态申请写权限
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) 
-            != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                200
-            )
-        }
+        // 直接执行文件操作（权限已在MainActivity中申请）
+        performFileOperations()
+    }
 
+    /**
+     * 执行文件读写操作
+     */
+    private fun performFileOperations() {
         if (isSDCardAvailable()) {
             val sdCardPath = getSDCardPath()
-            Toast.makeText(this, "$sdCardPath/example.txt", Toast.LENGTH_SHORT).show()
-            writeFileToSDCard("$sdCardPath/example.txt", "测试数据，写入SD卡的文件中")
-            readFileFromSDCard("$sdCardPath/example.txt")
+            val filePath = "$sdCardPath/example.txt"
+            Toast.makeText(this, "$filePath", Toast.LENGTH_SHORT).show()
+            writeFileToSDCard(filePath, "测试数据，写入SD卡的文件中")
+            readFileFromSDCard(filePath)
             Toast.makeText(this, "SD卡可用", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "SD卡不可用", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE && grantResults.isNotEmpty() 
-            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            val sdCardPath = getSDCardPath()
-            readFileFromSDCard("$sdCardPath/example.txt")
         }
     }
 
@@ -84,18 +66,18 @@ class FileWriteReadToSD : AppCompatActivity() {
      * 读取SD卡指定的文件
      */
     private fun readFileFromSDCard(filePath: String) {
-        // 申请读权限
+        // 检查读权限
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) 
             != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                REQUEST_CODE
-            )
+            Toast.makeText(this, "没有读取权限", Toast.LENGTH_SHORT).show()
             return
         }
         try {
             val file = File(filePath)
+            if (!file.exists()) {
+                Toast.makeText(this, "文件不存在", Toast.LENGTH_SHORT).show()
+                return
+            }
             val fis = FileInputStream(file)
             val br = BufferedReader(InputStreamReader(fis))
             val sb = StringBuilder()
@@ -106,7 +88,9 @@ class FileWriteReadToSD : AppCompatActivity() {
             br.close()
             fis.close()
             textView.text = sb.toString()
+            Toast.makeText(this, "文件读取成功", Toast.LENGTH_SHORT).show()
         } catch (e: IOException) {
+            Toast.makeText(this, "读取文件失败: ${e.message}", Toast.LENGTH_SHORT).show()
             e.printStackTrace()
         }
     }
@@ -117,15 +101,27 @@ class FileWriteReadToSD : AppCompatActivity() {
      * @param content 文件的内容
      */
     fun writeFileToSDCard(filePath: String, content: String) {
+        // 检查写权限
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) 
+            != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "没有写入权限", Toast.LENGTH_SHORT).show()
+            return
+        }
         try {
             val file = File(filePath)
+            // 确保父目录存在
+            val parentDir = file.parentFile
+            if (parentDir != null && !parentDir.exists()) {
+                parentDir.mkdirs()
+            }
             val fos = FileOutputStream(file)
             val bw = BufferedWriter(OutputStreamWriter(fos))
             bw.write(content)
             bw.close()
             fos.close()
+            Toast.makeText(this, "文件写入成功", Toast.LENGTH_SHORT).show()
         } catch (e: IOException) {
-            Toast.makeText(this, "无法写入文件", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "无法写入文件: ${e.message}", Toast.LENGTH_SHORT).show()
             e.printStackTrace()
         }
     }

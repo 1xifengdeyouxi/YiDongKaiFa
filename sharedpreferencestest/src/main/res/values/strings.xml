@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">SharedPreferencesTest</string>
+    <string name="title">SharedPreferences数据存储</string>
+    <string name="username">用户名：</string>
+    <string name="password">密码：</string>
+    <string name="hint_username">请输入用户名</string>
+    <string name="hint_password">请输入密码</string>
+    <string name="btn_save">保存</string>
+    <string name="btn_read">读取</string>
+    <string name="btn_clear">清除数据</string>
+    <string name="saved_data">保存的数据：</string>
+    <string name="no_data">暂无数据</string>
+    <string name="save_success">数据保存成功</string>
+    <string name="read_success">数据读取成功</string>
+    <string name="clear_success">数据已清除</string>
+    <string name="no_saved_data">没有保存的数据</string>
+    <string name="input_username">请输入用户名</string>
+    <string name="input_password">请输入密码</string>
+</resources>

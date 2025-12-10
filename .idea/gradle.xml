@@ -12,7 +12,11 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/broadcastreceiver" />
+            <option value="$PROJECT_DIR$/cameraalbumtest" />
             <option value="$PROJECT_DIR$/contentproviderone" />
+            <option value="$PROJECT_DIR$/contentprovidertwo" />
+            <option value="$PROJECT_DIR$/databaseroomtest" />
+            <option value="$PROJECT_DIR$/databasetest" />
             <option value="$PROJECT_DIR$/experiment02" />
             <option value="$PROJECT_DIR$/experiment03" />
             <option value="$PROJECT_DIR$/filetest" />
@@ -22,8 +26,11 @@
             <option value="$PROJECT_DIR$/my_menu" />
             <option value="$PROJECT_DIR$/mycalculator" />
             <option value="$PROJECT_DIR$/notificationtest" />
+            <option value="$PROJECT_DIR$/playmusictest" />
+            <option value="$PROJECT_DIR$/playvideotest" />
             <option value="$PROJECT_DIR$/recycleviewdemo" />
             <option value="$PROJECT_DIR$/sensordemo" />
+            <option value="$PROJECT_DIR$/sharedpreferencestest" />
             <option value="$PROJECT_DIR$/webviewweather" />
           </set>
         </option>
